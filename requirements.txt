@@ -1,0 +1,11 @@
+# Whisper for transcription
+git+https://github.com/openai/whisper.git
+
+# YouTube downloader
+yt-dlp
+
+# Sentence Transformers for embeddings
+sentence-transformers
+
+# PyTorch (CPU version, adjust if you have GPU)
+torch
