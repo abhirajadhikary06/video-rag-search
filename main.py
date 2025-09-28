@@ -2,7 +2,7 @@ import os
 import whisper
 
 # Step 1: Download audio from YouTube
-os.system("yt-dlp -x --audio-format mp3 -o 'video.mp3' https://youtu.be/J6WwG5HX588?si=69yiDMJEH7S3k7KG")
+os.system("yt-dlp -x --audio-format mp3 -o 'video.mp3' https://www.youtube.com/watch?v=n2Fluyr3lbc")
 
 # Step 2: Load Whisper model
 model = whisper.load_model("small")  # you can use tiny, small, medium, large

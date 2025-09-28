@@ -9,3 +9,6 @@ sentence-transformers
 
 # PyTorch (CPU version, adjust if you have GPU)
 torch
+pydub
+groq
+python-dotenv

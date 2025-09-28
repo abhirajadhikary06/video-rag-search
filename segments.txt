@@ -1,58 +1,28 @@
-[0.00 - 5.84]  Ever wondered how Google translates an entire webpage to a different language in a matter of seconds?
-[5.84 - 9.68]  Or your phone gallery group's images based on their location?
-[9.68 - 12.40]  All of this is a product of deep learning.
-[12.40 - 15.28]  But what exactly is deep learning?
-[15.28 - 21.12]  Deep learning is a subset of machine learning, which in turn is a subset of artificial intelligence.
-[21.12 - 26.40]  Artificial intelligence is a technique that enables a machine to mimic human behavior.
-[26.48 - 31.68]  Machine learning is a technique to achieve AI through algorithms trained with data.
-[31.68 - 37.20]  And finally, deep learning is a type of machine learning inspired by the structure of the human
-[37.20 - 42.88]  brain. In terms of deep learning, this structure is called an artificial neural network.
-[42.88 - 47.36]  Let's understand deep learning better and how it's different from machine learning.
-[47.36 - 51.92]  Say we create a machine that could differentiate between tomatoes and cherries.
-[51.92 - 55.76]  If done using machine learning, we'd have to tell the machine the features
-[55.76 - 61.04]  based on which the two can be differentiated. These features could be the size and the type
-[61.04 - 66.32]  of stem on them. With deep learning on the other hand, the features are picked out by the neural
-[66.32 - 71.84]  network without human intervention. Of course, that kind of independence comes at the cost of
-[71.84 - 78.00]  having a much higher volume of data to train our machine. Now, let's dive into the working of neural
-[78.00 - 84.24]  networks. Here we have three students. Each of them write down the digit nine on a piece of paper.
-[84.88 - 90.56]  Notably, they don't all write it identically. The human brain can easily recognize the digits.
-[91.20 - 96.96]  But what if a computer had to recognize them? That's where deep learning comes in.
-[96.96 - 100.48]  Here's a neural network trained to identify handwritten digits.
-[101.04 - 108.80]  Each number is present as an image of 28 times 28 pixels. Now, that amounts to a total of 784
-[108.80 - 114.72]  pixels. Neurons, the core entity of a neural network, is where the information processing
-[114.72 - 121.68]  takes place. Each of the 784 pixels is fed to a neuron in the first layer of our neural network.
-[122.24 - 128.40]  This forms the input layer. On the other end, we have the output layer with each neuron
-[128.40 - 133.92]  representing a digit with the hidden layers existing between them. The information is transferred
-[133.92 - 140.16]  from one layer to another over connecting channels. Each of these has a value attached to it, and
-[140.16 - 146.48]  hence is called a weighted channel. All neurons have a unique number associated with it called bias.
-[147.28 - 153.44]  This bias is added to the weighted sum of inputs reaching the neuron, which is then applied to a
-[153.44 - 159.76]  function known as the activation function. The result of the activation function determines
-[159.76 - 166.08]  if the neuron gets activated. Every activated neuron passes on information to the following layers.
-[166.72 - 173.04]  This continues up till the second last layer. The one neuron activated in the output layer
-[173.04 - 179.28]  corresponds to the input digit. The weights and bias are continuously adjusted to produce a well
-[179.28 - 185.04]  trained network. So, where is deep learning applied? In customer support, when most people
-[185.04 - 190.40]  converse with customer support agents, the conversation seems so real. They don't even
-[190.40 - 196.08]  realize that it's actually a bot on the other side. In medical care, neural networks detect
-[196.08 - 203.04]  cancer cells and analyze MRI images to give detailed results. Self-driving cars. What
-[203.04 - 209.68]  seemed like science fiction is now a reality. Apple, Tesla, and Nissan are only a few of the
-[209.68 - 216.64]  companies working on self-driving cars. So, deep learning has a vast scope, but it too faces some
-[216.64 - 223.12]  limitations. The first as we discussed earlier is data. While deep learning is the most efficient
-[223.12 - 229.28]  way to deal with unstructured data, a neural network requires a massive volume of data to train.
-[229.28 - 234.72]  Let's assume we always have access to the necessary amount of data. Processing this is not
-[234.72 - 240.48]  within the capability of every machine. And that brings us to our second limitation,
-[240.48 - 246.56]  computational power. Training a neural network requires graphical processing units,
-[246.56 - 253.92]  which have thousands of cores as compared to CPUs. And GPUs are of course more expensive.
-[253.92 - 261.28]  And finally, we come down to training time. Deep neural networks take hours or even months to train.
-[261.28 - 267.20]  The time increases with the amount of data and number of layers in the network. So, here's a
-[267.20 - 272.88]  short quiz for you. Arrange the following statements in order to describe the working of a neural
-[272.88 - 281.44]  network. A. The bias is added. B. The weighted sum of the inputs is calculated. C. Specific neuron
-[281.44 - 288.32]  is activated. D. The result is fed to an activation function. Leave your answers in the comment section
-[288.32 - 294.24]  below. Three of you stand a chance to win Amazon vouchers. So, hurry! Some of the popular deep
-[294.24 - 301.12]  learning frameworks include TensorFlow, PyTorch, Keras, Deep Learning 4j, Café, and Microsoft
-[301.12 - 307.44]  Cognitive Toolkit. Considering the future predictions for deep learning and AI, we seem to have only
-[307.44 - 313.20]  scratched the surface. In fact, Horace Technology is working on a device for the blind that uses
-[313.20 - 319.12]  deep learning with computer vision to describe the world to the users. Replicating the human mind at
-[319.12 - 326.48]  the entirety may be not just an episode of science fiction for too long. The future is indeed full
-[326.48 - 332.64]  of surprises. And that is deep learning for you in short. If you enjoyed this video, do like and
-[332.64 - 338.48]  share it. Also, subscribe to our channel if you haven't yet, as we have a lot more exciting videos
-[338.48 - 348.56]  coming up. Fun learning till then!
+[0.00 - 3.54]  Python classes are like blueprints for creating objects.
+[3.86 - 7.22]  Let's say we want to create some characters in a video game with attributes like health,
+[7.32 - 8.14]  damage, and speed.
+[8.34 - 10.92]  So here I have an example of a class called Character.
+[11.14 - 15.16]  And down here I have two different characters being created, a warrior and a ninja.
+[15.68 - 17.54]  When you first create a class object in Python,
+[17.68 - 20.38]  it will always run this stunder init method first.
+[20.60 - 24.06]  This method initializes the object and also handles the inputs.
+[24.30 - 29.44]  So you'll see the warrior is being supplied with 100 health, 50 damage, and 10 speed.
+[29.44 - 33.60]  And the ninja is being supplied with 80 health, 40 damage, and 40 speed.
+[34.00 - 36.38]  The self variable is supplied automatically and
+[36.38 - 38.46]  it's always placed as the first variable.
+[38.82 - 42.02]  You don't have to call it self, but that's the typical naming convention.
+[42.28 - 46.70]  The self variable is used to reference the particular object it's dealing with in
+[46.70 - 47.08]  memory.
+[47.54 - 51.52]  So down here, let's print warrior.speed and ninja.speed.
+[51.68 - 55.20]  You'll see we get each of the original values we set them to when we first
+[55.20 - 55.92]  created them.
+[56.10 - 58.44]  We can also add some functionality to these classes.
+[58.44 - 63.06]  So here I've added a method called doubleSpeed which just takes the self.speed
+[63.06 - 63.94]  and doubles it.
+[64.08 - 67.34]  So let's do warrior.doublespeed down here and
+[67.34 - 70.36]  let's print warrior.speed and ninja.speed again.
+[70.62 - 74.88]  And you'll see the warrior speed has doubled and the ninja speed was unaffected.
+[74.94 - 78.12]  So you can probably see how having these separate objects with their own unique
+[78.12 - 81.44]  attributes can be extremely useful in object oriented programming.
+[81.88 - 82.68]  Hopefully this helped.
+[82.78 - 84.70]  Thanks for watching and I'll see you all in the next video.
