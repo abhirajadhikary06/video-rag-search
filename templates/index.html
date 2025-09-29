@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>YouTube Timestamp Search - vRag</title>
+    <style>
+        :root{
+            --black: #000000;
+            --white: #ffffff;
+            --gray-50: #fafafa;
+            --gray-100: #f5f5f5;
+            --gray-200: #e5e5e5;
+            --gray-300: #d4d4d4;
+            --gray-400: #a3a3a3;
+            --gray-500: #737373;
+            --gray-600: #525252;
+            --gray-700: #404040;
+            --gray-800: #262626;
+            --gray-900: #171717;
+            --radius: 16px;
+            --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+
+        * { 
+            box-sizing: border-box; 
+            margin: 0; 
+            padding: 0; 
+        }
+
+        html, body { 
+            height: 100%; 
+            font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--white);
+            color: var(--black);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Background Illustration Underlay */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 800"><defs><linearGradient id="grad1" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:rgb(240,240,240);stop-opacity:0.3" /><stop offset="100%" style="stop-color:rgb(250,250,250);stop-opacity:0.1" /></linearGradient></defs><circle cx="200" cy="150" r="120" fill="url(%23grad1)"/><circle cx="900" cy="600" r="150" fill="url(%23grad1)"/><circle cx="1000" cy="200" r="100" fill="url(%23grad1)"/><path d="M 0 400 Q 300 350 600 400 T 1200 400" stroke="rgba(200,200,200,0.2)" fill="none" stroke-width="2"/><path d="M 0 500 Q 400 450 800 500 T 1200 500" stroke="rgba(200,200,200,0.15)" fill="none" stroke-width="2"/></svg>');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            opacity: 0.4;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Navigation */
+        nav {
+            position: sticky;
+            top: 0;
+            background: rgba(255, 255, 255, 0.98);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--gray-200);
+            padding: 1.25rem 0;
+            z-index: 1000;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: var(--black);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: var(--white);
+            font-size: 1.125rem;
+            letter-spacing: -0.025em;
+        }
+
+        .logo-text {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+            letter-spacing: -0.025em;
+        }
+
+        .github-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.625rem 1.25rem;
+            background: var(--black);
+            color: var(--white);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.875rem;
+            transition: all 0.2s ease;
+            border: 2px solid var(--black);
+        }
+
+        .github-link:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        /* Main Layout */
+        main {
+            position: relative;
+            z-index: 1;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            min-height: calc(100vh - 100px);
+        }
+
+        /* Header Section */
+        .header-section {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .main-title {
+            font-size: 3rem;
+            font-weight: 800;
+            color: var(--black);
+            margin-bottom: 1rem;
+            letter-spacing: -0.03em;
+            line-height: 1.1;
+        }
+
+        .main-subtitle {
+            font-size: 1.125rem;
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Cards */
+        .card {
+            position: relative;
+            background: var(--white);
+            border: 2px solid var(--black);
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: 8px 8px 0px 0px var(--black);
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 10px 10px 0px 0px var(--black);
+        }
+
+        .card-header {
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid var(--gray-200);
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--black);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .card-description {
+            color: var(--gray-600);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Form Elements */
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-label {
+            display: block;
+            font-weight: 600;
+            color: var(--black);
+            margin-bottom: 0.75rem;
+            font-size: 0.95rem;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 1rem 1.25rem;
+            border: 2px solid var(--black);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.2s ease;
+            background: var(--white);
+            color: var(--black);
+            font-family: inherit;
+        }
+
+        .form-input:focus {
+            outline: none;
+            box-shadow: 4px 4px 0px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .form-input::placeholder {
+            color: var(--gray-400);
+        }
+
+        .submit-button {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            background: var(--black);
+            color: var(--white);
+            border: 2px solid var(--black);
+            border-radius: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-top: 0.5rem;
+            font-family: inherit;
+        }
+
+        .submit-button:hover {
+            background: var(--white);
+            color: var(--black);
+            box-shadow: 4px 4px 0px 0px var(--black);
+            transform: translate(-2px, -2px);
+        }
+
+        .submit-button:active {
+            transform: translate(0, 0);
+            box-shadow: 2px 2px 0px 0px var(--black);
+        }
+
+        /* Keywords Grape Stack Layout */
+        .keywords-container {
+            margin-top: 1.5rem;
+        }
+
+        .keywords-wrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .keyword-row {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .keyword-row-3 {
+            max-width: 100%;
+        }
+
+        .keyword-row-2 {
+            max-width: 70%;
+        }
+
+        .keyword-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem 1.5rem;
+            background: var(--white);
+            border: 2px solid var(--black);
+            border-radius: 12px;
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            text-align: center;
+            min-width: 140px;
+            box-shadow: 3px 3px 0px 0px var(--black);
+        }
+
+        .keyword-button:hover {
+            background: var(--black);
+            color: var(--white);
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0px 0px var(--gray-700);
+        }
+
+        .keyword-button:active {
+            transform: translate(0, 0);
+            box-shadow: 2px 2px 0px 0px var(--black);
+        }
+
+        /* Results Table */
+        .results-wrapper {
+            margin-top: 1.5rem;
+            border: 2px solid var(--black);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--white);
+        }
+
+        .results-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .results-table th {
+            background: var(--gray-100);
+            padding: 1rem 1.25rem;
+            text-align: left;
+            font-weight: 700;
+            color: var(--black);
+            font-size: 0.875rem;
+            border-bottom: 2px solid var(--black);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .results-table td {
+            padding: 1.25rem;
+            border-bottom: 1px solid var(--gray-300);
+            color: var(--black);
+        }
+
+        .results-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .results-table tbody tr:hover {
+            background: var(--gray-50);
+        }
+
+        .results-link {
+            color: var(--black);
+            text-decoration: underline;
+            font-weight: 600;
+            transition: all 0.2s ease;
+        }
+
+        .results-link:hover {
+            color: var(--gray-700);
+        }
+
+        .similarity-score {
+            font-weight: 700;
+            color: var(--black);
+            background: var(--gray-100);
+            padding: 0.25rem 0.75rem;
+            border-radius: 6px;
+            display: inline-block;
+        }
+
+        /* Action Buttons */
+        .actions-container {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .secondary-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 1rem 1.75rem;
+            background: var(--white);
+            border: 2px solid var(--black);
+            border-radius: 10px;
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            box-shadow: 4px 4px 0px 0px var(--black);
+        }
+
+        .secondary-button:hover {
+            background: var(--black);
+            color: var(--white);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0px 0px var(--gray-700);
+        }
+
+        .secondary-button:active {
+            transform: translate(0, 0);
+            box-shadow: 2px 2px 0px 0px var(--black);
+        }
+
+        /* Messages */
+        .message, .error {
+            padding: 1rem 1.25rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+            border: 2px solid var(--black);
+        }
+
+        .message {
+            background: var(--gray-100);
+            color: var(--black);
+        }
+
+        .error {
+            background: var(--gray-100);
+            color: var(--black);
+        }
+
+        /* Loading Overlay */
+        #loadingOverlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(4px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+        }
+
+        .loading-content {
+            text-align: center;
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: var(--radius);
+            border: 2px solid var(--black);
+            box-shadow: 8px 8px 0px 0px var(--black);
+            max-width: 400px;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid var(--gray-300);
+            border-top: 4px solid var(--black);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 1.5rem;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loading-text {
+            color: var(--black);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            font-weight: 500;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 0 1.5rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            main {
+                padding: 2.5rem 1.5rem;
+            }
+
+            .main-title {
+                font-size: 2rem;
+            }
+
+            .main-subtitle {
+                font-size: 1rem;
+            }
+
+            .card {
+                padding: 1.5rem;
+            }
+
+            .keyword-row-2,
+            .keyword-row-3 {
+                max-width: 100%;
+            }
+
+            .keyword-button {
+                min-width: 120px;
+                font-size: 0.875rem;
+            }
+
+            .results-wrapper {
+                overflow-x: auto;
+            }
+
+            .results-table {
+                min-width: 600px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            main {
+                padding: 2rem 1rem;
+            }
+
+            .card {
+                padding: 1.25rem;
+                box-shadow: 4px 4px 0px 0px var(--black);
+            }
+
+            .main-title {
+                font-size: 1.75rem;
+            }
+
+            .keyword-button {
+                min-width: 100px;
+                padding: 0.875rem 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+        <div class="logo-section" style="display: flex; align-items: center;">
+            <div class="logo-icon">vR</div>
+            <div style="display: flex; flex-direction: column; align-items: flex-start; margin-left: 0.25rem;">
+                <div class="logo-text" style="position: relative; top: -6px;">vRag</div>
+                <img src="/static/mariadb.png" alt="MariaDB" class="mariadb-logo"
+                    style="width: 48px; height: 11.8px;">
+            </div>
+        </div>
+            <a href="https://github.com/abhirajadhikary06/video-rag-search" class="github-link">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"/>
+                </svg>
+                GitHub
+            </a>
+        </div>
+    </nav>
+
+    <main>
+        <header class="header-section">
+            <h1 class="main-title">YouTube Timestamp Search</h1>
+            <p class="main-subtitle">
+                Find the exact moments that matter in any YouTube video using AI-powered semantic search technology
+            </p>
+        </header>
+
+        {% if message %}
+        <div class="{{ 'error' if message.startswith('Error') or 'Invalid' in message or 'No match' in message else 'message' }}">
+            {{ message }}
+        </div>
+        {% endif %}
+
+        {% if step == 'input_link' %}
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                        <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+                    </svg>
+                    Enter YouTube Link
+                </h2>
+                <p class="card-description">
+                    Paste the URL of any YouTube video to begin analyzing its content and generating searchable keywords
+                </p>
+            </div>
+            
+            <form method="post" id="linkForm">
+                <div class="form-group">
+                    <label for="youtube_link" class="form-label">YouTube URL</label>
+                    <input 
+                        type="text" 
+                        id="youtube_link" 
+                        name="youtube_link" 
+                        class="form-input"
+                        placeholder="https://www.youtube.com/watch?v=..."
+                        required
+                    >
+                </div>
+                <button type="submit" class="submit-button">
+                    Process Video
+                </button>
+            </form>
+        </div>
+
+        {% elif step == 'select_keyword' %}
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <circle cx="11" cy="11" r="8"></circle>
+                        <path d="m21 21-4.35-4.35"></path>
+                    </svg>
+                    Select a Keyword
+                </h2>
+                <p class="card-description">
+                    Choose a keyword below to find the most semantically similar segment in the video content
+                </p>
+            </div>
+            
+            <div class="keywords-container">
+                <div class="keywords-wrapper">
+                    {% set total = keywords|length %}
+                    {% set row1_count = [total, 3]|min %}
+                    {% set row2_count = total - row1_count if total > 3 else 0 %}
+                    
+                    {% if row1_count > 0 %}
+                    <div class="keyword-row keyword-row-3">
+                        {% for kw in keywords[:row1_count] %}
+                        <a href="{{ url_for('select_keyword', index=loop.index) }}" class="keyword-button">
+                            {{ kw }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                    
+                    {% if row2_count > 0 %}
+                    <div class="keyword-row keyword-row-2">
+                        {% for kw in keywords[row1_count:] %}
+                        <a href="{{ url_for('select_keyword', index=loop.index + row1_count) }}" class="keyword-button">
+                            {{ kw }}
+                        </a>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        {% elif step == 'result' %}
+        <div class="card">
+            <div class="card-header">
+                <h2 class="card-title">
+                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
+                    </svg>
+                    Search Result
+                </h2>
+                <p class="card-description">
+                    {% if result %}
+                    Successfully found the most relevant video segment based on semantic similarity analysis
+                    {% else %}
+                    No matching segment was found for the selected keyword in this video
+                    {% endif %}
+                </p>
+            </div>
+            
+            {% if result %}
+            <div class="results-wrapper">
+                <table class="results-table">
+                    <thead>
+                        <tr>
+                            <th>Timestamp</th>
+                            <th>Title</th>
+                            <th>Link</th>
+                            <th>Score</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>{{ result.timestamp }}</strong></td>
+                            <td>{{ result.title }}</td>
+                            <td>
+                                <a href="{{ result.link }}" target="_blank" rel="noopener noreferrer" class="results-link">
+                                    Watch Segment
+                                </a>
+                            </td>
+                            <td>
+                                <span class="similarity-score">{{ result.score }}</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            {% endif %}
+            
+            <div class="actions-container">
+                <a href="{{ url_for('start_over') }}" id="startOver" class="secondary-button">
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="1,4 1,10 7,10"></polyline>
+                        <path d="M3.51,15a9,9,0,0,0,2.13,3.09,9,9,0,0,0,13.72,0,9,9,0,0,0,0-12.72,9,9,0,0,0-13.72,0A8.52,8.52,0,0,0,3.51,9"></path>
+                    </svg>
+                    Start Over
+                </a>
+            </div>
+        </div>
+        {% endif %}
+    </main>
+
+    <div id="loadingOverlay" style="display:none;">
+        <div class="loading-content">
+            <div class="spinner"></div>
+            <div id="loadingText" class="loading-text">Processing your request...</div>
+        </div>
+    </div>
+
+    <script>
+    // Loading Overlay
+    (function(){
+        function showOverlay(text){
+            const overlay = document.getElementById('loadingOverlay');
+            const textElement = document.getElementById('loadingText');
+            if(textElement) textElement.textContent = text || 'Processing...';
+            if(overlay) overlay.style.display = 'flex';
+        }
+        
+        function attachEventListeners(){
+            const form = document.getElementById('linkForm');
+            if(form){
+                form.addEventListener('submit', function(){
+                    showOverlay('Processing video... This may take a few minutes.\nDownloading audio, transcribing, and generating keywords.');
+                });
+            }
+            
+            const keywordButtons = document.querySelectorAll('.keyword-button');
+            keywordButtons.forEach(function(button){
+                button.addEventListener('click', function(){
+                    showOverlay('Searching for the best match...\nComputing semantic similarity scores.');
+                });
+            });
+            
+            const startOverButton = document.getElementById('startOver');
+            if(startOverButton){
+                startOverButton.addEventListener('click', function(){
+                    showOverlay('Resetting application...');
+                });
+            }
+        }
+        
+        document.addEventListener('DOMContentLoaded', attachEventListeners);
+    })();
+    </script>
+</body>
+</html>

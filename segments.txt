@@ -1,28 +1,12 @@
-[0.00 - 3.54]  Python classes are like blueprints for creating objects.
-[3.86 - 7.22]  Let's say we want to create some characters in a video game with attributes like health,
-[7.32 - 8.14]  damage, and speed.
-[8.34 - 10.92]  So here I have an example of a class called Character.
-[11.14 - 15.16]  And down here I have two different characters being created, a warrior and a ninja.
-[15.68 - 17.54]  When you first create a class object in Python,
-[17.68 - 20.38]  it will always run this stunder init method first.
-[20.60 - 24.06]  This method initializes the object and also handles the inputs.
-[24.30 - 29.44]  So you'll see the warrior is being supplied with 100 health, 50 damage, and 10 speed.
-[29.44 - 33.60]  And the ninja is being supplied with 80 health, 40 damage, and 40 speed.
-[34.00 - 36.38]  The self variable is supplied automatically and
-[36.38 - 38.46]  it's always placed as the first variable.
-[38.82 - 42.02]  You don't have to call it self, but that's the typical naming convention.
-[42.28 - 46.70]  The self variable is used to reference the particular object it's dealing with in
-[46.70 - 47.08]  memory.
-[47.54 - 51.52]  So down here, let's print warrior.speed and ninja.speed.
-[51.68 - 55.20]  You'll see we get each of the original values we set them to when we first
-[55.20 - 55.92]  created them.
-[56.10 - 58.44]  We can also add some functionality to these classes.
-[58.44 - 63.06]  So here I've added a method called doubleSpeed which just takes the self.speed
-[63.06 - 63.94]  and doubles it.
-[64.08 - 67.34]  So let's do warrior.doublespeed down here and
-[67.34 - 70.36]  let's print warrior.speed and ninja.speed again.
-[70.62 - 74.88]  And you'll see the warrior speed has doubled and the ninja speed was unaffected.
-[74.94 - 78.12]  So you can probably see how having these separate objects with their own unique
-[78.12 - 81.44]  attributes can be extremely useful in object oriented programming.
-[81.88 - 82.68]  Hopefully this helped.
-[82.78 - 84.70]  Thanks for watching and I'll see you all in the next video.
+[3.16 - 7.28]  hogy biders insight is lesz!
+[7.28 - 7.80]  Hát most amik Communicationhió kozunkét
+[7.80 - 11.54]  imp sanct zadunk,
+[11.54 - 12.24] מertKI GüDrawdid,
+[12.24 - 13.04]  tentük és J念etig segítenem,
+[16.92 - 18.32]  newsus!
+[18.32 - 29.98]  Mukplexorok minden� saj dass tässä só nopeoc miatt meration.
+[29.98 - 33.98]  csak ehhez ér optionálnak le heavy bőre van barátokban,
+[33.98 - 38.12]  mert a baráton az az egyik lók ни hétre lehétes,
+[38.12 - 39.90] usingen az egyik állni colonialra vahyagost ^^
+[39.90 - 43.16]  Elm yakolhatóü carrier-bablyáj az autó Vä Rise- greetings
+[43.16 - 43.20]  Ahogy doubled a burner kis kás WOW a

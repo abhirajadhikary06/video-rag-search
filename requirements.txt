@@ -12,3 +12,6 @@ torch
 pydub
 groq
 python-dotenv
+flask
+mariadb
+flask_caching
